@@ -1,0 +1,658 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.container::after {
+  content: "";
+  position: absolute;
+  background-color: rgb(205, 205, 3);
+  background-image: url(img/stock-photo-investment-loan-approval-concepts-to-build-residential-homes-real-estate-business-appraisal-of-2470825863.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  inset: 0;
+  z-index: -2;
+}
+.container::before {
+  content: "";
+  position: absolute;
+  background-color: rgba(255, 255, 0, 0.329);
+  inset: 0;
+  z-index: -1;
+}
+.navbar {
+  width: 100%;
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px,
+    rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px,
+    rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px,
+    rgba(42, 51, 70, 0.04) 0px 6px 6px -3px,
+    rgba(14, 63, 126, 0.04) 0px 12px 12px -6px,
+    rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+}
+.navbar ul {
+  display: flex;
+  padding: 0;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.navbar img {
+  height: 70px;
+}
+/* .navbar h3 {
+  color: blue;
+} */
+.navbar .landingBtn {
+  position: relative;
+  text-decoration: none;
+  padding: 10px 40px;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  width: auto;
+}
+.navbar a:hover {
+  background-color: blue;
+  color: #fff;
+}
+.navbar .landingBtn {
+  padding: 10px;
+  border: 2px solid gray;
+  width: auto;
+  position: relative;
+  border-radius: 10px;
+}
+/* From Uiverse.io by nathann09 */
+.form {
+  position: relative;
+  background-color: white;
+  display: block;
+  padding: 30px 20px;
+  max-width: 350px;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  height: auto;
+}
+
+.form-title {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: #000;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container input,
+.form button {
+  outline: none;
+  border: 1px solid #e5e7eb;
+  margin: 8px 0;
+}
+
+.input-container input {
+  background-color: #fff;
+  padding: 1rem;
+  padding-right: 3rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  width: 300px;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.submit {
+  display: block;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  background-color: blue;
+  color: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  width: 100%;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+}
+
+.signup-link {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+}
+
+.signup-link a {
+  text-decoration: underline;
+}
+/* Dash */
+.dashContainer {
+  display: flex;
+  justify-content: start;
+  align-items: none;
+}
+.dashNav {
+  position: relative;
+  height: 100vh;
+  background-color: #fff;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+.dashNav img {
+  height: 85px;
+  width: 95px;
+  margin-inline: auto;
+  margin-bottom: 15px;
+}
+.dashNav h3 {
+  /* background-color: aqua; */
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid gray;
+}
+a {
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.dashNav .menu {
+  display: flex;
+  flex-direction: column;
+}
+.dashNav h3 {
+  color: white;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: background-color 0.3s;
+}
+
+.menu a:not(.active):hover {
+  font-weight: bold;
+  /* background-color: rgb(205, 205, 3); */
+  border-radius: 5px;
+  color: white;
+}
+.menu a.active {
+  background-color: rgb(205, 205, 3);
+  border-radius: 5px;
+  color: black;
+}
+.profile {
+  font-size: 14px;
+  position: relative;
+  top: 342px;
+}
+.logout {
+  color: white;
+  text-decoration: none;
+  margin-left: auto;
+}
+
+.logout {
+  position: relative;
+  /* bottom: -72vh; */
+  margin-top: auto;
+  padding: 10px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  text-align: center;
+}
+.logout:hover {
+  font-weight: bolder;
+}
+/*Table*/
+.tableContainer {
+  width: 85%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 95%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.table {
+  margin-top: 10px;
+  min-height: 10px;
+  max-height: 580px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.table::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.table {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.tableContainer .tableTitle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+.tableContainer .tableTitle .openFormBtn {
+  margin: 0;
+}
+
+.table thead th {
+  background-color: blue;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+.table thead th:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.table thead th:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+.table tbody td {
+  padding: 12px;
+  text-align: left;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.table tbody .noData {
+  text-align: center;
+}
+/* Form */
+.openFormBtn {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  /* margin-bottom: 20px; */
+}
+
+.openFormBtn:hover {
+  background-color: #1b6ad1;
+}
+
+.popupForm {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.formContainer h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.formContainer label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.formContainer input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submitBtn {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.submitBtn:hover {
+  background-color: rgb(8, 8, 213);
+}
+
+.declineBtn,
+.cancelBtn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.cancelBtn:hover,
+.declineBtn:hover {
+  background-color: #c82333;
+}
+
+.popupForm.active {
+  display: flex;
+}
+.formContainer form .formBtn {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.formContainer form .submitBtn {
+  margin: 0;
+}
+.formContainer .formTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.formContainer .formTitle h2 {
+  padding: 0;
+  margin: 0;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+/* User Loan Detail */
+.userDetailContainer {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 85%;
+  margin-inline: auto;
+  height: 95%;
+  overflow: hidden;
+}
+.userDetailContainer .userDetailTitle {
+  margin: 0;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #ccc;
+  /* padding-bottom: 10px; */
+  margin-bottom: 10px;
+}
+.userDetailContainer .backContainer {
+  margin: 0;
+  /* padding: 10px 0; */
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+}
+.userDetailContainer .backContainer .openFormBtn {
+  width: auto;
+}
+.userDetailContainer .userDetailBody {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  /* background-color: aqua; */
+  display: flex;
+  flex: 1;
+}
+.userDetailContainer .userDetailBody li {
+  width: 60%;
+  height: 80vh;
+  /* background-color: aqua; */
+  /* overflow: hidden;
+  overflow-y: scroll; */
+}
+.userDetailContainer .userDetailBody .table {
+  min-height: 20px;
+  max-height: 500px;
+}
+li {
+  list-style: none;
+}
+.userDetailContainer h2 {
+  font-size: 1.8rem;
+  /* margin-bottom: 20px; */
+  color: #333;
+  /* background-color: aqua; */
+}
+
+/* User details */
+.userDetail {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 45%;
+}
+
+.userDetail p {
+  width: 48%;
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+.userDetail p strong {
+  color: #555;
+}
+.dashNav {
+  background-color: #333;
+  padding: 20px;
+}
+
+/* Individual stats box styling */
+.dashboard {
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 25px;
+  left: 225px;
+}
+.stats-box {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.stats-box:hover {
+  transform: translateY(-5px);
+}
+
+.stats-box h2 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.stats-box .number {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #4caf50;
+}
+.searchBox {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.searchInput {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.searchInput:focus {
+  border-color: #4caf50;
+}
+/* General Button Styles */
+.action-btn,
+.reset-btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Activate/Deactivate Button */
+.action-btn {
+  background: linear-gradient(135deg, #4caf50, #81c784);
+}
+
+.action-btn:hover {
+  background: linear-gradient(135deg, #388e3c, #66bb6a);
+  transform: translateY(-2px);
+}
+
+/* Reset Password Button */
+.reset-btn {
+  background: linear-gradient(135deg, #f44336, #e57373);
+}
+
+.reset-btn:hover {
+  background: linear-gradient(135deg, #d32f2f, #ef5350);
+  transform: translateY(-2px);
+}
+/* Password Form Styles */
+.passwordForm {
+  /* display: none; */
+  position: fixed;
+  top: 30%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.passwordForm label {
+  display: block;
+  font-size: 14px;
+  margin-top: 10px;
+  color: #333;
+}
+
+.passwordForm input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  margin: 5px 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  color: #fff;
+}
+
+.cancel-btn {
+  background: #eee;
+  color: #333;
+  margin-left: 5px;
+}
+
+.submit-btn:hover,
+.cancel-btn:hover {
+  transform: translateY(-2px);
+}
