@@ -45,12 +45,6 @@ CREATE TABLE `loan_list` (
   `user_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
---
--- Dumping data for table `loan_list`
---
-
-INSERT INTO `loan_list` (`id`, `first_name`, `last_name`, `address`, `contact`, `loan_amount`, `total_balance`, `remaining_balance`, `request_date`, `duration`, `due_date`, `pay_date`, `penalty_date`, `status`, `user_id`) VALUES
-(22, 'Hardeil', 'Salmeron', 'Tungkop', '090858316552', 2000, 2060, 2060, '2024-11-11', 28, '2024-12-09', '2024-11-18', '2024-11-18', 'Accept', 2);
 
 -- --------------------------------------------------------
 
@@ -87,8 +81,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `contact`, `password`, `role`, `status`) VALUES
-(1, 'hardeil', 'hardeilsalmeron5@gmail.com', '090858316551', 'sad123', 'Admin', 'Active'),
-(2, 'sadsads', 'hardeilsalmeron55@gmail.com', '090858316552', 'sadsad', 'Staff', 'active');
+(1, 'Admin', 'admin@gmail.com', '090858316551', 'sad123', 'Admin', 'Active');
 
 --
 -- Indexes for dumped tables
