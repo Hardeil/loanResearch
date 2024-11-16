@@ -77,13 +77,17 @@ if ($userId > 0) {
 
             $paymentSchedule = [];
             $currentDate = clone $requestDate;
-
             for ($i = 0; $i < $totalWeeks; $i++) {
                 $status = "-";
 
                 $loopDateStr = $currentDate->format('Y-m-d');
                 $status = ($user['pay_date'] > $loopDateStr) ? "Paid" : "-";
-                $penalty = in_array($loopDateStr, $penaltyDates) ? "Yes" : ($loopDateStr < min($penaltyDates) ? "-" : "No");
+
+                if (!empty($penaltyDates)) {
+                    $penalty = in_array($loopDateStr, $penaltyDates) ? "Yes" : ($loopDateStr < min($penaltyDates) ? "-" : "No");
+                } else {
+                    $penalty = "-";
+                }
 
                 $paymentAmount = in_array($loopDateStr, $penaltyDates) ? $weeklyPayment + 100 : $weeklyPayment;
                 $paymentSchedule[] = [
