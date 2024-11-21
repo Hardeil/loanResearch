@@ -51,7 +51,7 @@ $conn->close();
                     <img src="img/b073c9e7-5ec3-43e2-b399-f2008f3b79e4-removebg-preview.png" alt="">
                 </li>
                 <li>
-                    <h3>CARD MRI RIZAL BANK, Inc.</h3>
+                <h3><span class="card">CARD</span><span class="rbi">RBI</span></h3>
                 </li>
             </ul>
             <a href="index.php" class="landingBtn">Sign In</a>

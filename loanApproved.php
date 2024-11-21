@@ -3,7 +3,7 @@ include_once "dbConnection/dbConnection.php";
 session_start();
 
 $searchTerm = "";
-$sql = "SELECT id, first_name, last_name, address, contact, loan_amount, total_balance, remaining_balance, due_date, status
+$sql = "SELECT id, first_name, last_name, contact, loan_amount, total_balance, remaining_balance, due_date, status
         FROM loan_list WHERE status='Accept'";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['searchTerm'])) {
@@ -41,7 +41,6 @@ $result = $conn->query($sql);
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Address</th>
                             <th>Contact</th>
                             <th>Loan Amount</th>
                             <th>Total Amount</th>
@@ -56,7 +55,6 @@ if ($result->num_rows > 0) {
         echo "<tr onclick=\"window.location='specificLoanUser.php?userId={$row['id']}'\" style='cursor:pointer;'>";
         echo "<td>" . $row['first_name'] . "</td>";
         echo "<td>" . $row['last_name'] . "</td>";
-        echo "<td>" . $row['address'] . "</td>";
         echo "<td>" . $row['contact'] . "</td>";
         echo "<td>P" . number_format($row['loan_amount'], 2) . "</td>";
         echo "<td>P" . number_format($row['total_balance'], 2) . "</td>";

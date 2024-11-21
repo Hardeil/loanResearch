@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 04:51 AM
+-- Generation Time: Dec 13, 2024 at 01:56 PM
 -- Server version: 11.5.2-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,15 +29,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `loan_list` (
   `id` int(100) NOT NULL,
+  `client_cid` varchar(100) NOT NULL,
   `first_name` varchar(50) NOT NULL,
+  `middle_name` varchar(100) NOT NULL,
   `last_name` varchar(50) NOT NULL,
-  `address` varchar(50) NOT NULL,
+  `center_name` varchar(100) NOT NULL,
+  `birth_date` varchar(100) NOT NULL,
   `contact` varchar(50) NOT NULL,
+  `gender` varchar(50) NOT NULL,
+  `marital_status` varchar(100) NOT NULL,
+  `education` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `region` varchar(100) NOT NULL,
+  `province` varchar(100) NOT NULL,
+  `zip_code` varchar(100) NOT NULL,
+  `dosri` varchar(100) NOT NULL,
   `loan_amount` int(50) NOT NULL,
   `total_balance` int(100) NOT NULL,
   `remaining_balance` int(50) NOT NULL,
-  `request_date` varchar(100) NOT NULL,
   `duration` int(100) NOT NULL,
+  `request_date` varchar(100) NOT NULL,
   `due_date` varchar(100) NOT NULL,
   `pay_date` varchar(100) NOT NULL,
   `penalty_date` varchar(100) NOT NULL,
@@ -45,6 +56,20 @@ CREATE TABLE `loan_list` (
   `user_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `savings_tbl`
+--
+
+CREATE TABLE `savings_tbl` (
+  `id` int(100) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `total_balance` int(100) NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `created_at` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -55,8 +80,10 @@ CREATE TABLE `loan_list` (
 CREATE TABLE `transaction` (
   `id` int(100) NOT NULL,
   `loan_id` int(100) NOT NULL,
+  `savings_id` int(100) NOT NULL,
   `date` varchar(100) NOT NULL,
   `balance` int(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
@@ -81,7 +108,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `contact`, `password`, `role`, `status`) VALUES
-(1, 'Admin', 'admin@gmail.com', '090858316551', 'sad123', 'Admin', 'Active');
+(1, 'Admin', 'admin@gmail.com', '090858316551', 'sad123', 'Admin', 'Active'),
+(2, 'sadsads', 'sadsads@gmail.com', '090858316552', 'sadsad', 'Staff', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -95,11 +123,16 @@ ALTER TABLE `loan_list`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `savings_tbl`
+--
+ALTER TABLE `savings_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transaction`
 --
 ALTER TABLE `transaction`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `loan_id` (`loan_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -115,13 +148,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `loan_list`
 --
 ALTER TABLE `loan_list`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `savings_tbl`
+--
+ALTER TABLE `savings_tbl`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -138,12 +177,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `loan_list`
   ADD CONSTRAINT `loan_list_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `transaction`
---
-ALTER TABLE `transaction`
-  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`loan_id`) REFERENCES `loan_list` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

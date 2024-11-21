@@ -4,9 +4,9 @@ session_start();
 $userId = isset($_GET['userId']) ? intval($_GET['userId']) : 0;
 
 $user = null;
-
+$totalDeposit = 0;
 if ($userId > 0) {
-    $sql = "SELECT id, first_name, last_name, address, contact, loan_amount, total_balance, remaining_balance, request_date, due_date, pay_date, penalty_date, status FROM loan_list WHERE id = $userId";
+    $sql = "SELECT id, first_name, last_name, contact, loan_amount, total_balance, remaining_balance, request_date, due_date, pay_date, penalty_date, status FROM loan_list WHERE id = $userId";
     $result = $conn->query($sql);
 
     // Fetch penalty dates
@@ -21,50 +21,6 @@ if ($userId > 0) {
 
     if ($result && $result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        $currentDate = date('Y-m-d');
-
-        if ($currentDate > $user['penalty_date'] && $user['status'] === "Accept") {
-            $penaltyAmount = 100;
-            $newRemainingBalance = $user['remaining_balance'] + $penaltyAmount;
-            $penaltyDate = date('Y-m-d', strtotime($user['penalty_date'] . ' +7 days'));
-            $updateSql = "UPDATE loan_list SET remaining_balance = '$newRemainingBalance', penalty_date = '$penaltyDate' WHERE id = $userId";
-            $conn->query($updateSql);
-            $penaltyDate = date('Y-m-d', strtotime($currentDate . ' -1 day'));
-            $insertPenaltySql = "INSERT INTO transaction (loan_id, date, balance, type) VALUES ($userId, '$penaltyDate', '$penaltyAmount', 'Penalty')";
-            if (!$conn->query($insertPenaltySql)) {
-                echo "Error inserting penalty: " . $conn->error;
-            }
-            $user['remaining_balance'] = $newRemainingBalance;
-        }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $depositAmount = $conn->real_escape_string($_POST['depositAmount']);
-            $newRemainingBalance = $user['remaining_balance'] - $depositAmount;
-            $currentDate = $user['pay_date'];
-            $payDate = date('Y-m-d', strtotime($currentDate . ' + 7 days'));
-            $penaltyDate = $user['pay_date'] >= $user['penalty_date'] ? $payDate : $user['penalty_date'];
-            $updateSql = "UPDATE loan_list SET remaining_balance = '$newRemainingBalance', pay_date = '$payDate', penalty_date = '$penaltyDate' WHERE id = $userId";
-
-            if ($conn->query($updateSql) === true) {
-                $user['remaining_balance'] = $newRemainingBalance;
-
-                $insertDepositSql = "INSERT INTO transaction (loan_id, date, balance, type) VALUES ($userId, '$currentDate', '$depositAmount', 'Deposit')";
-                $conn->query($insertDepositSql);
-
-                if ($newRemainingBalance <= 0) {
-                    $conn->query("UPDATE loan_list SET status = 'Completed' WHERE id = $userId");
-                    $user['status'] = 'Completed';
-                }
-
-                echo "<script>
-                alert('Loan Deposit successfully.');
-                window.location.href = 'specificLoanUser.php?userId=$userId';
-                </script>";
-                exit;
-            } else {
-                echo "Error: " . $conn->error;
-            }
-        }
 
         $requestDate = new DateTime($user['request_date']);
         $dueDate = new DateTime($user['due_date']);
@@ -77,9 +33,10 @@ if ($userId > 0) {
 
             $paymentSchedule = [];
             $currentDate = clone $requestDate;
+            $todaysDate = date('Y-m-d');
+
             for ($i = 0; $i < $totalWeeks; $i++) {
                 $status = "-";
-
                 $loopDateStr = $currentDate->format('Y-m-d');
                 $status = ($user['pay_date'] > $loopDateStr) ? "Paid" : "-";
 
@@ -90,6 +47,11 @@ if ($userId > 0) {
                 }
 
                 $paymentAmount = in_array($loopDateStr, $penaltyDates) ? $weeklyPayment + 100 : $weeklyPayment;
+
+                if ($loopDateStr <= $todaysDate) {
+                    $totalDeposit += $paymentAmount;
+                }
+
                 $paymentSchedule[] = [
                     'payment_due' => $loopDateStr,
                     'payment_amount' => number_format($paymentAmount, 2),
@@ -108,6 +70,101 @@ if ($userId > 0) {
                     'payment_amount' => number_format($weeklyPayment, 2),
                 ],
             ];
+        }
+        $currentDate = date('Y-m-d');
+        if ($currentDate > $user['penalty_date'] && $user['status'] === "Accept") {
+            $penaltyAmount = 100;
+            $newRemainingBalance = $user['remaining_balance'] + $penaltyAmount;
+            $penaltyDate = date('Y-m-d', strtotime($user['penalty_date'] . ' +7 days'));
+            $updateSql = "UPDATE loan_list SET remaining_balance = '$newRemainingBalance', penalty_date = '$penaltyDate' WHERE id = $userId";
+            $conn->query($updateSql);
+            $penaltyDate = date('Y-m-d', strtotime($currentDate . ' -1 day'));
+            $insertPenaltySql = "INSERT INTO transaction (loan_id,savings_id, date, balance, status, type) VALUES ('$userId', '$userId', '$penaltyDate', '$penaltyAmount', 'none','Penalty')";
+            if (!$conn->query($insertPenaltySql)) {
+                echo "Error inserting penalty: " . $conn->error;
+            }
+            $user['remaining_balance'] = $newRemainingBalance;
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $depositAmount = $conn->real_escape_string($_POST['depositAmount']);
+
+            $newRemainingBalance = $user['remaining_balance'] - $depositAmount;
+            $currentDate = $user['pay_date'];
+            $payDate = date('Y-m-d', strtotime($currentDate . ' + 7 days'));
+            $penaltyDate = $user['pay_date'] >= $user['penalty_date'] ? $payDate : $user['penalty_date'];
+            $updateSql = "UPDATE loan_list SET remaining_balance = '$newRemainingBalance', pay_date = '$payDate', penalty_date = '$penaltyDate' WHERE id = $userId";
+
+            if ($conn->query($updateSql) === true) {
+                $user['remaining_balance'] = $newRemainingBalance;
+                if ($totalDeposit > $depositAmount) {
+                    echo "<script>
+                    alert('Loan Deposit is not enough.');
+                    window.location.href = 'specificLoanUser.php?userId=$userId';
+                    </script>";
+                    exit;
+                } else {
+                    $insertDepositSql = "INSERT INTO transaction (loan_id,savings_id, date, balance,status, type) VALUES ($userId,$userId, '$currentDate', '$depositAmount','none', 'Deposit')";
+                    $conn->query($insertDepositSql);
+
+                    if ($newRemainingBalance <= 0) {
+                        $conn->query("UPDATE loan_list SET status = 'Completed' WHERE id = $userId");
+                        $user['status'] = 'Completed';
+
+                        $sqlSelect = "SELECT id, total_balance FROM savings_tbl WHERE first_name = ? AND last_name = ?";
+                        $stmtSelect = $conn->prepare($sqlSelect);
+
+                        if ($stmtSelect) {
+                            $stmtSelect->bind_param("ss", $user['first_name'], $user['last_name']);
+                            $stmtSelect->execute();
+                            $resultSelect = $stmtSelect->get_result();
+
+                            if ($resultSelect && $resultSelect->num_rows > 0) {
+                                $savingsData = $resultSelect->fetch_assoc();
+                                $savingsId = $savingsData['id'];
+                                $currentBalance = $savingsData['total_balance'];
+                                $amount = $user['loan_amount'] * 0.02;
+                                $sqlUpdate = "UPDATE savings_tbl SET total_balance = total_balance + ? WHERE id = ?";
+                                $stmtUpdate = $conn->prepare($sqlUpdate);
+
+                                if ($stmtUpdate) {
+                                    $stmtUpdate->bind_param("di", $amount, $savingsId);
+                                    if ($stmtUpdate->execute()) {
+                                        echo "<script>
+                    alert('Savings updated successfully.');
+                    window.location.href = 'specificLoanUser.php?userId=$userId';
+                </script>";
+                                    } else {
+                                        echo "Error updating savings: " . $stmtUpdate->error;
+                                    }
+                                    $stmtUpdate->close();
+                                } else {
+                                    echo "Error preparing update statement: " . $conn->error;
+                                }
+
+                            } else {
+                                echo "<script>
+            alert('Savings account not found.');
+            window.location.href = 'specificLoanUser.php?userId=$userId';
+        </script>";
+                            }
+                            $stmtSelect->close();
+                        } else {
+                            echo "Error preparing select statement: " . $conn->error;
+                        }
+
+                    }
+
+                    echo "<script>
+                    alert('Loan Deposit successfully.');
+                    window.location.href = 'specificLoanUser.php?userId=$userId';
+                    </script>";
+                    exit;
+                }
+
+            } else {
+                echo "Error: " . $conn->error;
+            }
         }
 
     } else {
@@ -160,7 +217,6 @@ $conn->close();
                 <div class="userDetail">
                     <p><strong>First Name:</strong> <?php echo $user['first_name']; ?></p>
                     <p><strong>Last Name:</strong> <?php echo $user['last_name']; ?></p>
-                    <p><strong>Address:</strong> <?php echo $user['address']; ?></p>
                     <p><strong>Contact:</strong> <?php echo $user['contact']; ?></p>
                     <p><strong>Loan Amount:</strong> P<?php echo number_format($user['loan_amount'], 2); ?></p>
                     <p><strong>Total Penalty:</strong> P<?php echo number_format($totalPenalty, 2); ?></p>

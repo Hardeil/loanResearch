@@ -11,17 +11,7 @@ function toggleForm(openBtnId, closeBtnId, formId) {
     form.classList.remove("active");
   });
 }
-// const openFormBtn = document.getElementById("openFormBtn");
-// const closeFormBtn = document.getElementById("closeFormBtn");
-// const loanForm = document.getElementById("form");
 
-// openFormBtn.addEventListener("click", function () {
-// loanForm.classList.add("active");
-// });
-
-// closeFormBtn.addEventListener("click", function () {
-// loanForm.classList.remove("active");
-// });
 document.addEventListener("DOMContentLoaded", function () {
   const currentUrl = window.location.href;
   const menuLinks = document.querySelectorAll(".menu a");

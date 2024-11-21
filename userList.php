@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (isset($_POST['reset_user_id'])) {
-        // Reset password to a default value
         $userId = $_POST['reset_user_id'];
         $defaultPassword = "defaultPassword123";
 
@@ -62,7 +61,6 @@ $conn->close();
             </ul>
             <div class="table">
                 <table>
-                    <!-- Table Headers -->
                     <thead>
                         <tr>
                             <th>Username</th>
@@ -73,7 +71,6 @@ $conn->close();
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <!-- Table Body -->
                     <tbody>
                     <?php
 if ($result->num_rows > 0) {
@@ -90,8 +87,6 @@ if ($result->num_rows > 0) {
         echo "<input type='hidden' name='new_status' value='" . ($row['status'] === 'Active' ? 'Inactive' : 'Active') . "'>";
         echo "<button type='submit' class='action-btn'>" . ($row['status'] === 'Active' ? 'Deactivate' : 'Activate') . "</button>";
         echo "</form>";
-
-        // Reset Password Button
         echo "<form method='POST' style='display:inline-block; margin-left: 5px;'>";
         echo "<input type='hidden' name='reset_user_id' value='{$row['id']}'>";
         echo "<button type='submit' class='reset-btn'>Reset Password</button>";
