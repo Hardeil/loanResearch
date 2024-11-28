@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Validate withdrawal
         if ($totalBalance - $amount >= 200) {
-            $insertWithdrawSql = "INSERT INTO transaction (loan_id, savings_id, date, balance, status, type) VALUES ('$userId', '$userId', '$currentData', '$amount', 'Pending', 'Withdrawal')";
+            $insertWithdrawSql = "INSERT INTO transaction (loan_id, savings_id, date, balance, status, type) VALUES ('$userId', '$userId', '$currentDate', '$amount', 'Pending', 'Withdrawal')";
             if (!$conn->query($insertWithdrawSql)) {
                 echo "Error inserting withdrawal request: " . $conn->error;
             } else {
