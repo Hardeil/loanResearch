@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_result($totalBalance);
         $stmt->fetch();
         $stmt->close();
-
+        $currentDate = date('Y-m-d');
         // Validate withdrawal
         if ($totalBalance - $amount >= 200) {
             $insertWithdrawSql = "INSERT INTO transaction (loan_id, savings_id, date, balance, status, type) VALUES ('$userId', '$userId', '$currentDate', '$amount', 'Pending', 'Withdrawal')";
