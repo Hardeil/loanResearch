@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("di", $amount, $userId);
         $currentDate = date('Y-m-d');
-        $insertDepositSql = "INSERT INTO transaction (loan_id, savings_id, date, balance, status, type) VALUES ('$userId','$userId', '$currentData', '$amount','none', 'Savings')";
+        $insertDepositSql = "INSERT INTO transaction (loan_id, savings_id, date, balance, status, type) VALUES ('$userId','$userId', '$currentDate', '$amount','none', 'Savings')";
         if (!$conn->query($insertDepositSql)) {
             echo "Error inserting penalty: " . $conn->error;
         }
