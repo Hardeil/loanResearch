@@ -88,7 +88,13 @@ if ($userId > 0) {
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $depositAmount = $conn->real_escape_string($_POST['depositAmount']);
-
+            if ($totalDeposit > $depositAmount) {
+                echo "<script>
+                alert('Loan Deposit is not enough.');
+                window.location.href = 'specificLoanUser.php?userId=$userId';
+                </script>";
+                exit;
+            }
             $newRemainingBalance = $user['remaining_balance'] - $depositAmount;
             $currentDate = $user['pay_date'];
             $payDate = date('Y-m-d', strtotime($currentDate . ' + 7 days'));

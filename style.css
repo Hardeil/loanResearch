@@ -13,7 +13,7 @@
 .container::after {
   content: "";
   position: absolute;
-  background-color: rgb(205, 205, 3);
+  /* background-color: rgb(205, 205, 3); */
   background-image: url(img/stock-photo-investment-loan-approval-concepts-to-build-residential-homes-real-estate-business-appraisal-of-2470825863.jpg);
   background-size: cover;
   background-repeat: no-repeat;
@@ -25,7 +25,7 @@
 .container::before {
   content: "";
   position: absolute;
-  background-color: rgba(255, 255, 0, 0.329);
+  background-color: rgba(0, 128, 255, 0.247);
   inset: 0;
   z-index: -1;
 }
